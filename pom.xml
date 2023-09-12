@@ -44,7 +44,7 @@
 
     <!-- Add slow test groups here and annotate classes similar to @Tag('groupName'). -->
     <!-- Excluded groups are ran on github ci, to force here, pass -d"excludedGroups=" -->
-    <excludedGroups>TestcontainersTests</excludedGroups>
+    <!--<excludedGroups>TestcontainersTests</excludedGroups>-->
 
     <!-- Automatic Module Name -->
     <module.name>org.mybatis</module.name>
@@ -56,10 +56,10 @@
 
     <!-- Spotbugs Setup -->
     <spotbugs.onlyAnalyze>org.apache.ibatis.*</spotbugs.onlyAnalyze>
-
+    <native.maven.plugin.version>0.9.15</native.maven.plugin.version>
     <!-- Surefire Setup -->
     <argLine>-Xmx2048m</argLine>
-
+    <argLine>-Dfile.encoding=UTF-8</argLine>
     <!-- Reproducible Builds -->
     <project.build.outputTimestamp>1678513628</project.build.outputTimestamp>
     <java.version>17</java.version>
@@ -120,67 +120,21 @@
       <version>1.18.26</version>
     </dependency>
 
-    <!-- Test dependencies -->
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>5.10.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-params</artifactId>
-      <version>5.10.0</version>
-      <scope>test</scope>
-    </dependency>
+
     <dependency>
       <groupId>org.hsqldb</groupId>
       <artifactId>hsqldb</artifactId>
       <version>2.6.1</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.apache.derby</groupId>
-      <artifactId>derby</artifactId>
-      <version>10.15.2.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.derby</groupId>
-      <artifactId>derbyshared</artifactId>
-      <version>10.15.2.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.derby</groupId>
-      <artifactId>derbyoptionaltools</artifactId>
-      <version>10.15.2.0</version>
-      <scope>test</scope>
-    </dependency>
+
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <version>2.2.222</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <version>5.5.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-subclass</artifactId>
-      <version>5.5.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-junit-jupiter</artifactId>
-      <version>5.5.0</version>
-      <scope>test</scope>
-    </dependency>
+
     <dependency>
       <groupId>org.apache.velocity</groupId>
       <artifactId>velocity-engine-core</artifactId>
@@ -208,36 +162,8 @@
       <optional>true</optional>
     </dependency>
 
-    <dependency>
-      <groupId>org.assertj</groupId>
-      <artifactId>assertj-core</artifactId>
-      <version>3.24.2</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>eu.codearte.catch-exception</groupId>
-      <artifactId>catch-exception</artifactId>
-      <version>2.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <version>1.19.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>postgresql</artifactId>
-      <version>1.19.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>mysql</artifactId>
-      <version>1.19.0</version>
-      <scope>test</scope>
-    </dependency>
+
+
     <!-- For javadoc link -->
     <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
@@ -255,6 +181,19 @@
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
       <version>2.20.0</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!--<dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>1.19.0</version>
+      <scope>test</scope>
+    </dependency>-->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>5.9.3</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -344,6 +283,18 @@
           </excludes>
         </configuration>
       </plugin>-->
+      <!--<plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.12.4</version>
+      <configuration>
+        <skipTests>false</skipTests>
+          <parallel>none</parallel>
+          <perCoreThreadCount>true</perCoreThreadCount>
+          <threadCount>1</threadCount>
+          <useUnlimitedThreads>false</useUnlimitedThreads>
+      </configuration>
+    </plugin>-->
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -365,6 +316,58 @@
             <delimiter>$[*]</delimiter>
           </delimiters>
           <encoding>UTF-8</encoding>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.6.0</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <mainClass>com.git.test.run.TestSql</mainClass>
+            </manifest>
+          </archive>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.graalvm.buildtools</groupId>
+        <artifactId>native-maven-plugin</artifactId>
+        <version>${native.maven.plugin.version}</version>
+        <!-- 0.9.25 -->
+        <extensions>true</extensions>
+        <executions>
+          <!--<execution>
+            <id>build-native</id>
+            <goals>
+              <goal>build</goal>
+            </goals>
+            <phase>package</phase>
+          </execution>-->
+          <!--<execution>
+            <id>test-native</id>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <phase>test</phase>
+          </execution>-->
+        </executions>
+        <configuration>
+          <fallback>false</fallback>
         </configuration>
       </plugin>
 

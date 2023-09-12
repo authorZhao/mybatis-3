@@ -1,0 +1,16 @@
+{
+  "resources":{
+  "includes":[{
+    "pattern":"\\QMETA-INF/services/java.sql.Driver\\E"
+  }, {
+    "pattern":"\\Qcom/mysql/cj/TlsSettings.properties\\E"
+  }, {
+    "pattern":"\\Qorg/apache/ibatis/builder/xml/mybatis-3-mapper.dtd\\E"
+  }, {
+    "pattern":"\\Qtest/UserMapper.xml\\E"
+  }]},
+  "bundles":[{
+    "name":"com.mysql.cj.LocalizedErrorMessages",
+    "locales":[""]
+  }]
+}
